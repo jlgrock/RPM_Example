@@ -18,20 +18,22 @@ Source: git://github.com/jlgrock/myapp
 URL: http://www.myapp.com
 Distribution: MadeUp Linux
 Vendor: My Company
-Packager: Justin Grant <jgrant@justinleegrant.com>
-Copyright: GPL
+Packager: Justin Grant <jgrant@gmail.com>
+Copyright: MIT
 Group: Applications/Sound
 
 # Description/Summary of the product
-Summary:  The one-line description of my app
+Summary:  Installs Postgres and a bunch of useful extensions
 
 %description
-This is my app and what it does...
+Installs Postgres and a bunch of useful extensions
 
 Provides: mail-reader
 Requires: playmidi = 2.3
 Requires: bla >= 0.3
 Conflicts: playmidi =S 4
+BuildRequires: libtool
+
 %setup
 
 #
@@ -65,7 +67,18 @@ Conflicts: playmidi =S 4
 # only consist of a make install command. Otherwise, you'll need to add the usual assortment of cp, mv, or 
 # install commands to get the job done.
 %install
+rm -rf $RPM_BUILD_ROOT
+make install DESTDIR=$RPM_BUILD_ROOT
 
+
+#
+# Configure
+#
+# In this case, the %build section runs two commands, ./configure to run the configure script, and %install to 
+# build the software. For most # applications, this may be all you need. You can use the %configure macro in 
+# place of the call to the ./configure script.
+#
+# %configure
 
 
 #
@@ -83,7 +96,8 @@ Conflicts: playmidi =S 4
 # this case, ldconfig would need to be run after the package is installed or erased. As another example, if 
 # a package contains a shell, the file /etc/shells would need to be updated appropriately when the package 
 # was installed or erased.
-
+%preun
+%postun
 
 
 
@@ -103,19 +117,34 @@ Conflicts: playmidi =S 4
 # Another script that can be present is a script that can clean things up after the build. This script is 
 # rarely used, since RPM normally does a good job of clean-up in most build environments.
 %clean
-
+rm -rf $RPM_BUILD_ROOT
 
 
 #
 # The File List
 #
-# The last section consists of a list of files that will comprise the package. Additionally, a number of macros 
-# can be used to control file attributes when installed, as well as to denote which files are documentation, 
-# and which contain configuration information. The file list is very important — if it is missing, no package will 
-# be built.
+# The last section consists of a list of files (full path!) that will comprise the package. Additionally, a 
+# number of macros can be used to control file attributes when installed, as well as to denote which files 
+# are documentation, and which contain configuration information. The file list is very important — if it
+# is missing, no package will be built.
 %files
-%doc README
+%defattr(-, root, root)
+%defattr(0644, root, root) /usr/local/bin/abc.def
+%doc README LICENSE
+%docdir /usr/local/docs
 /usr/local/bin/cdp
 /usr/local/bin/cdplay
 /usr/local/man/man1/cdp.1
 
+#
+# Change Log
+# 
+# Edit to describe the last change you have made to the package. Fill it in with the date, your name and email address, 
+# the version and release of the package, and a short description of what has changed in the package in the following format:
+# * date Packager's Name <packager's_email> version-revision
+# - Summary of changes
+%changelog
+* 5/13/2014 Justin Grant <jlgrock@gmail.com> 0.8.18.1-0.2
+- Updated to fix spelling mistake
+* 5/12/2014 Justin Grant <jlgrock@gmail.com> 0.8.18.1-0.1
+- Initial RPM Release
