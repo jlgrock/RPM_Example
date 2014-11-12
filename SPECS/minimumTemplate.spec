@@ -10,7 +10,7 @@ Vendor:			VendorName
 Packager:		Justin Grant <jlgrock@gmail.com>
 License:		MIT
 BuildArch:		noarch
-
+BuildRoot:      my/path/%{name}-%{version}-%{release}
 Requires:       redhat-release
 
 %description
@@ -23,6 +23,6 @@ rm -rf $RPM_BUILD_ROOT
 
 ###############################################################################
 %files
-###############################################################################
+###############################################################################REMARK_SH.sql
 %defattr(-,root,root)
-/pgdg-oraclelinux93-9.3-1.noarch.rpm
+/myfile.bla

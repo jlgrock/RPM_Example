@@ -1,4 +1,6 @@
+te
 #######################################################################################
+
 #
 # This file attempts to include all of the common directives and macros that one might 
 # use to create a simple spec file.  This keeps the documentation of this code local.  
